@@ -1,8 +1,6 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<html lang="fr"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Timer OBS</title>
   <style>
     body {
@@ -20,21 +18,21 @@
     #progressContainer {
       width: 100%;
       height: 30px;
-      background-color: rgba(255, 255, 255, 0.2);
-      border-radius: 15px;
+      background-color: rgba(252, 235, 212, 0.9);
+      border-radius: 5px;
       overflow: hidden;
-      margin-top: 40px;
+      margin-top: 0px;
     }
     #progressBar {
       width: 0%;
       height: 100%;
-      background-color: limegreen;
+      background-color: #f1a362;
       transition: width 0.5s linear;
     }
     #progressText {
       margin-top: 5px;
       font-size: 18px;
-      color: white;
+      color: #00000;
     }
     input, button {
       margin: 10px;
@@ -47,16 +45,16 @@
   <div id="controlPanel" style="display: none">
     <h2>Contrôle du Timer</h2>
     <label>Durée (minutes) :</label>
-    <input type="number" id="minutesInput" min="0" max="120" value="5" />
-    <br />
+    <input type="number" id="minutesInput" min="0" max="120" value="5">
+    <br>
     <button id="startBtn">Démarrer</button>
     <button id="resetBtn">Réinitialiser</button>
     <h3 id="timeDisplay">00:00</h3>
   </div>
 
-  <div id="progressContainer" style="display: none">
-    <div id="progressBar"></div>
-    <div id="progressText">00:00</div>
+  <div id="progressContainer" style="display: block;">
+    <div id="progressBar" style="width: 78.026%;"></div>
+    <div id="progressText">01:06</div>
   </div>
 
   <script>
@@ -92,6 +90,7 @@
         const percent = Math.min((elapsed / data.duration) * 100, 100);
         progressBar.style.width = `${percent}%`;
 
+        // Calcul du temps restant pour affichage texte
         const remainingTime = Math.max(Math.round(data.duration - elapsed), 0);
         const minutes = Math.floor(remainingTime / 60);
         const seconds = remainingTime % 60;
@@ -104,6 +103,7 @@
       updateProgress();
     }
 
+    // Contrôle du timer
     if (mode === 'control') {
       document.getElementById('startBtn').addEventListener('click', () => {
         const mins = parseInt(document.getElementById('minutesInput').value, 10) || 0;
@@ -131,5 +131,6 @@
       });
     }
   </script>
-</body>
-</html>
+
+
+</body></html>
