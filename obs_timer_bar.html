@@ -31,6 +31,11 @@
       background-color: limegreen;
       transition: width 0.5s linear;
     }
+    #progressText {
+      margin-top: 5px;
+      font-size: 18px;
+      color: white;
+    }
     input, button {
       margin: 10px;
       padding: 10px;
@@ -51,6 +56,7 @@
 
   <div id="progressContainer" style="display: none">
     <div id="progressBar"></div>
+    <div id="progressText">00:00</div>
   </div>
 
   <script>
@@ -60,6 +66,7 @@
     const controlPanel = document.getElementById('controlPanel');
     const progressContainer = document.getElementById('progressContainer');
     const progressBar = document.getElementById('progressBar');
+    const progressText = document.getElementById('progressText');
     const timeDisplay = document.getElementById('timeDisplay');
 
     let duration = 0;
@@ -84,6 +91,12 @@
         const elapsed = (Date.now() - data.startTime) / 1000;
         const percent = Math.min((elapsed / data.duration) * 100, 100);
         progressBar.style.width = `${percent}%`;
+
+        // Calcul du temps restant pour affichage texte
+        const remainingTime = Math.max(Math.round(data.duration - elapsed), 0);
+        const minutes = Math.floor(remainingTime / 60);
+        const seconds = remainingTime % 60;
+        progressText.textContent = `${String(minutes).padStart(2,'0')}:${String(seconds).padStart(2,'0')}`;
       }
       requestAnimationFrame(updateProgress);
     }
@@ -115,6 +128,7 @@
         localStorage.removeItem('obsTimerData');
         remaining = 0;
         progressBar.style.width = '0%';
+        progressText.textContent = '00:00';
         timeDisplay.textContent = '00:00';
       });
     }
